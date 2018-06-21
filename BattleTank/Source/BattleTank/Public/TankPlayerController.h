@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerController.h"
+#include "GameFramework/Actor.h"
 #include "Tank.h"
 #include "TankPlayerController.generated.h" // Must be the last include
 
@@ -19,4 +20,12 @@ public:
 	ATank* GetControlledTank() const;
 	
 	void BeginPlay() override;
+
+	// Called every frame
+	virtual void Tick(float DeltaTime) override;
+
+private:
+
+	// Start tank moving the barrel so that a shot would hit where the crosshair intersects the world
+	void AimTowardsCrosshair();
 };
