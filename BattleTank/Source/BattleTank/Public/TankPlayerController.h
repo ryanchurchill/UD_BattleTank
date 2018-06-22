@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerController.h"
 #include "GameFramework/Actor.h"
+#include "Engine/World.h"
 #include "Tank.h"
 #include "TankPlayerController.generated.h" // Must be the last include
 
@@ -27,6 +28,8 @@ private:
 	float CrosshairXLocation = 0.5;
 	UPROPERTY(EditAnywhere)
 	float CrosshairYLocation = 0.3333;
+	UPROPERTY(EditAnywhere)
+	float LineTraceRange = 1000000; // CM -> 10 KM
 	
 	ATank* GetControlledTank() const;
 
@@ -36,4 +39,5 @@ private:
 	// Return an OUT parameter, true if hit landscape
 	bool GetSightRayHitLocation(FVector& OutHitLocation) const;
 	bool GetLookDirection(FVector2D ScreenLocation, FVector & LookDirection) const;
+	bool GetLookVectorHitLocation(FVector LookDirection, FVector & OutHitLocation) const;
 };
