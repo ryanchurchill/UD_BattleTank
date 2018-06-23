@@ -4,11 +4,9 @@
 
 #include "CoreMinimal.h"
 #include "AIController.h"
-#include "GameFramework/PlayerController.h"
-#include "Engine/World.h"
-#include "Tank.h"
-
 #include "TankAiController.generated.h"
+
+class ATank;
 
 /**
  * 

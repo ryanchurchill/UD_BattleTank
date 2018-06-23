@@ -1,7 +1,9 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "TankAiController.h"
-
+#include "GameFramework/PlayerController.h"
+#include "Engine/World.h"
+#include "Tank.h"
 
 void ATankAiController::BeginPlay()
 {
@@ -10,17 +12,12 @@ void ATankAiController::BeginPlay()
 	// try to get the tank
 	ATank* ControlledTank = GetControlledTank();
 	if (ControlledTank == nullptr) {
-		UE_LOG(LogTemp, Warning, TEXT("AiController Failed to find tank"));
-	}
-	else {
-		UE_LOG(LogTemp, Warning, TEXT("AiController Found tank: %s"), *(ControlledTank->GetName()));
+		UE_LOG(LogTemp, Error, TEXT("AiController Failed to find tank"));
 	}
 
 	ATank* PlayerTank = GetPlayerTank();
 	if (PlayerTank == nullptr) {
-		UE_LOG(LogTemp, Warning, TEXT("AiController Failed to find PlayerTank"));
-	} else {
-		UE_LOG(LogTemp, Warning, TEXT("AiController Found PlayerTank: %s"), *(PlayerTank->GetName()));
+		UE_LOG(LogTemp, Error, TEXT("AiController Failed to find PlayerTank"));
 	}
 }
 

@@ -2,7 +2,8 @@
 
 #include "TankAimingComponent.h"
 #include "TankBarrel.h"
-
+#include "Kismet/GameplayStatics.h"
+#include "GameFramework/Actor.h"
 
 // Sets default values for this component's properties
 UTankAimingComponent::UTankAimingComponent()
@@ -66,8 +67,7 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 		ESuggestProjVelocityTraceOption::DoNotTrace
 	)) {		
 		// Convert OutLaunchVelocity to unit vector
-		FVector AimDirection = OutLaunchVelocity.GetSafeNormal();		
-		UE_LOG(LogTemp, Warning, TEXT("%s aiming direction: %s"), *ThisTankName, *AimDirection.ToString());
+		FVector AimDirection = OutLaunchVelocity.GetSafeNormal();				
 		ElevateBarrelTowards(AimDirection);
 	}	
 }

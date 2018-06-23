@@ -1,6 +1,9 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "TankPlayerController.h"
+#include "GameFramework/Actor.h"
+#include "Engine/World.h"
+#include "Tank.h"
 
 void ATankPlayerController::BeginPlay()
 {
@@ -9,11 +12,8 @@ void ATankPlayerController::BeginPlay()
 	// try to get the tank
 	ATank* ControlledTank = GetControlledTank();
 	if (ControlledTank == nullptr) {
-		UE_LOG(LogTemp, Warning, TEXT("PlayerController Failed to find tank"));
-	}
-	else {
-		UE_LOG(LogTemp, Warning, TEXT("PlayerController Found tank: %s"), *(ControlledTank->GetName()));
-	}
+		UE_LOG(LogTemp, Error, TEXT("PlayerController Failed to find tank"));
+	}	
 }
 
 void ATankPlayerController::Tick(float DeltaTime)
