@@ -32,8 +32,20 @@ void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 	// ...
 }
 
+void UTankAimingComponent::RotateBarrelTowards(FVector AimDirection)
+{
+	// Fid difference between barrel rotation and AimDirection
+	FRotator BarrelRotation = Barrel->GetForwardVector().Rotation();
+	FRotator AimAsRotator = AimDirection.Rotation();
+	FRotator DeltaRotator = AimAsRotator - BarrelRotation;
+
+	// Move the barrel the right amount this frame given a max elevation speed and frame time
+
+}
+
 void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 {
+	FString ThisTankName = GetOwner()->GetName();
 	if (Barrel == nullptr) {
 		UE_LOG(LogTemp, Error, TEXT("%s failed to find Barrel"), *ThisTankName);
 		return;
@@ -53,11 +65,11 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 		0.0f,
 		0.0f,
 		ESuggestProjVelocityTraceOption::DoNotTrace
-	)) {
-		FString ThisTankName = GetOwner()->GetName();
+	)) {		
 		// Convert OutLaunchVelocity to unit vector
 		FVector AimDirection = OutLaunchVelocity.GetSafeNormal();		
 		UE_LOG(LogTemp, Warning, TEXT("%s aiming direction: %s"), *ThisTankName, *AimDirection.ToString());
+		RotateBarrelTowards(AimDirection);
 	}	
 }
 
