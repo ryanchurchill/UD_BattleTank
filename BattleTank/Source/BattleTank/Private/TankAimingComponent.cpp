@@ -1,5 +1,6 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
+#include "TankBarrel.h"
 #include "TankAimingComponent.h"
 
 
@@ -32,15 +33,13 @@ void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 	// ...
 }
 
-void UTankAimingComponent::RotateBarrelTowards(FVector AimDirection)
+void UTankAimingComponent::ElevateBarrelTowards(FVector AimDirection)
 {
 	// Fid difference between barrel rotation and AimDirection
 	FRotator BarrelRotation = Barrel->GetForwardVector().Rotation();
 	FRotator AimAsRotator = AimDirection.Rotation();
-	FRotator DeltaRotator = AimAsRotator - BarrelRotation;
-
-	// Move the barrel the right amount this frame given a max elevation speed and frame time
-
+	FRotator DeltaRotator = AimAsRotator - BarrelRotation;	
+	Barrel->Elevate(5); // TODO: remove magic number
 }
 
 void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
@@ -69,11 +68,11 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 		// Convert OutLaunchVelocity to unit vector
 		FVector AimDirection = OutLaunchVelocity.GetSafeNormal();		
 		UE_LOG(LogTemp, Warning, TEXT("%s aiming direction: %s"), *ThisTankName, *AimDirection.ToString());
-		RotateBarrelTowards(AimDirection);
+		ElevateBarrelTowards(AimDirection);
 	}	
 }
 
-void UTankAimingComponent::SetBarrelReference(UStaticMeshComponent * BarrelToSet)
+void UTankAimingComponent::SetBarrelReference(UTankBarrel * BarrelToSet)
 {
 	Barrel = BarrelToSet;
 }
