@@ -2,6 +2,7 @@
 
 #include "TankAimingComponent.h"
 #include "TankBarrel.h"
+#include "TankTurret.h"
 #include "Kismet/GameplayStatics.h"
 #include "GameFramework/Actor.h"
 
@@ -34,14 +35,16 @@ void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 	// ...
 }
 
-void UTankAimingComponent::ElevateBarrelTowards(FVector AimDirection)
+void UTankAimingComponent::SetBarrelReference(UTankBarrel * BarrelToSet)
 {
-	// Fid difference between barrel rotation and AimDirection
-	FRotator BarrelRotation = Barrel->GetForwardVector().Rotation();
-	FRotator AimAsRotator = AimDirection.Rotation();
-	FRotator DeltaRotator = AimAsRotator - BarrelRotation;	
-	Barrel->Elevate(DeltaRotator.Pitch);
+	Barrel = BarrelToSet;
 }
+
+void UTankAimingComponent::SetTurretReference(UTankTurret * _Turret)
+{
+	Turret = _Turret;
+}
+
 
 void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 {
@@ -69,10 +72,24 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 		// Convert OutLaunchVelocity to unit vector
 		FVector AimDirection = OutLaunchVelocity.GetSafeNormal();				
 		ElevateBarrelTowards(AimDirection);
-	}	
+		RotateTurretTowards(AimDirection);
+	}
 }
 
-void UTankAimingComponent::SetBarrelReference(UTankBarrel * BarrelToSet)
+void UTankAimingComponent::ElevateBarrelTowards(FVector AimDirection)
 {
-	Barrel = BarrelToSet;
+	// Find difference between barrel rotation and AimDirection
+	FRotator BarrelRotation = Barrel->GetForwardVector().Rotation();
+	FRotator AimAsRotator = AimDirection.Rotation();
+	FRotator DeltaRotator = AimAsRotator - BarrelRotation;
+	Barrel->Elevate(DeltaRotator.Pitch);
+}
+
+void UTankAimingComponent::RotateTurretTowards(FVector AimDirection)
+{
+	// Find difference between turret rotation and AimDirection
+	FRotator TurretRotation = Turret->GetForwardVector().Rotation();
+	FRotator AimAsRotator = AimDirection.Rotation();
+	FRotator DeltaRotator = AimAsRotator - TurretRotation;
+	Turret->Rotate(DeltaRotator.Yaw);
 }
