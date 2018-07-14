@@ -27,9 +27,15 @@ void ATankAiController::Tick(float DeltaTime)
 	
 	// TODO: move towards the player
 	
-	AimTowardsPlayerTank();
+	// Aim towards player tank
+	ATank* PlayerTank = GetPlayerTank();
+	if (PlayerTank) {
+		ATank* ControlledTank = GetControlledTank();
+		ControlledTank->AimAt(PlayerTank->GetActorLocation());
 
-	// TODO: fire at player when ready
+		// fire at player when ready
+		ControlledTank->Fire();
+	}	
 }
 
 ATank* ATankAiController::GetControlledTank() const
@@ -40,19 +46,10 @@ ATank* ATankAiController::GetControlledTank() const
 ATank * ATankAiController::GetPlayerTank() const
 {
 	APawn* PlayerPawn = GetWorld()->GetFirstPlayerController()->GetPawn();
-	/*if (PlayerPawn == nullptr) {
+	if (PlayerPawn == nullptr) {
 		UE_LOG(LogTemp, Error, TEXT("Failed to find Player Tank"));
 		return nullptr;
-	}*/
+	}
 
 	return Cast<ATank>(PlayerPawn);	
 }
-
-void ATankAiController::AimTowardsPlayerTank() const
-{
-	ATank* PlayerTank = GetPlayerTank();
-	if (PlayerTank) {
-		GetControlledTank()->AimAt(PlayerTank->GetActorLocation());
-	}
-}
-
