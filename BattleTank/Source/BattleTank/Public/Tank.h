@@ -40,7 +40,7 @@ protected:
 
 	
 private:
-	UTankAimingComponent* TankAimingComponent = nullptr;
+	UTankAimingComponent* TankAimingComponent = nullptr;	
 	
 	UPROPERTY(EditAnywhere, Category = Firing)
 	float LaunchSpeed = 4000; // CM -> 1,000 m/s
