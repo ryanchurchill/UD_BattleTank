@@ -4,8 +4,8 @@
 
 void UTankTrack::SetThrottle(float Throttle)
 {
-	FString Name = GetName();
-	UE_LOG(LogTemp, Warning, TEXT("%s Throttle: %f"), *Name, Throttle);
+	//FString Name = GetName();
+	//UE_LOG(LogTemp, Warning, TEXT("%s Throttle: %f"), *Name, Throttle);
 
 	auto ForceApplied = GetForwardVector() * TrackMaxDrivingForce * Throttle;
 	auto ForceLocation = GetComponentLocation(); // the middle of the track
