@@ -15,8 +15,8 @@ void UTankMovementComponent::Initialize(UTankTrack* _LeftTrack, UTankTrack* _Rig
 
 void UTankMovementComponent::IntendMoveForward(float Throw)
 {
-	FString TankName = GetOwner()->GetName();
-	UE_LOG(LogTemp, Warning, TEXT("%s: Intend throw: %f"), *TankName, Throw);
+	//FString TankName = GetOwner()->GetName();
+	//UE_LOG(LogTemp, Warning, TEXT("%s: Intend throw: %f"), *TankName, Throw);
 
 	if (!LeftTrack || !RightTrack) {
 		UE_LOG(LogTemp, Error, TEXT("Could not move: tracks not initialized"));
@@ -29,6 +29,9 @@ void UTankMovementComponent::IntendMoveForward(float Throw)
 
 void UTankMovementComponent::IntendTurnRight(float Throw)
 {
+	//FString TankName = GetOwner()->GetName();
+	//UE_LOG(LogTemp, Warning, TEXT("%s: Intend turn throw: %f"), *TankName, Throw);
+
 	if (!LeftTrack || !RightTrack) {
 		UE_LOG(LogTemp, Error, TEXT("Could not move: tracks not initialized"));
 		return;
@@ -48,5 +51,11 @@ void UTankMovementComponent::RequestDirectMove(const FVector & MoveVelocity, boo
 	FVector ForwardIntention = MoveVelocity.GetSafeNormal();
 	UE_LOG(LogTemp, Warning, TEXT("%s: CurrentTankForward: %s"), *TankName, *CurrentTankForward.ToString());
 	UE_LOG(LogTemp, Warning, TEXT("%s: Forward intention: %s"), *TankName, *ForwardIntention.ToString());
-	IntendMoveForward(FVector::DotProduct(ForwardIntention, CurrentTankForward));
+
+	auto ForwardThrow = FVector::DotProduct(ForwardIntention, CurrentTankForward);
+	//IntendMoveForward(ForwardThrow);
+
+	auto RightThrowVector = FVector::CrossProduct(ForwardIntention, CurrentTankForward);
+	UE_LOG(LogTemp, Warning, TEXT("Intend turn throw: %s"), *RightThrowVector.ToString());
+	IntendTurnRight(RightThrowVector.Z * 5);
 }
