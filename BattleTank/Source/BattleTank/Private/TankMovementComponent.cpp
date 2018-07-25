@@ -15,6 +15,9 @@ void UTankMovementComponent::Initialize(UTankTrack* _LeftTrack, UTankTrack* _Rig
 
 void UTankMovementComponent::IntendMoveForward(float Throw)
 {
+	FString TankName = GetOwner()->GetName();
+	UE_LOG(LogTemp, Warning, TEXT("%s: Intend throw: %f"), *TankName, Throw);
+
 	if (!LeftTrack || !RightTrack) {
 		UE_LOG(LogTemp, Error, TEXT("Could not move: tracks not initialized"));
 		return;
@@ -40,6 +43,10 @@ void UTankMovementComponent::RequestDirectMove(const FVector & MoveVelocity, boo
 	// No need to call super, we are replacing
 
 	FString TankName = GetOwner()->GetName();
-	FString MoveVelocityString = MoveVelocity.ToString();
-	UE_LOG(LogTemp, Warning, TEXT("%s: Moving to %s"), *TankName, *MoveVelocityString);
+
+	FVector CurrentTankForward = GetOwner()->GetActorForwardVector().GetSafeNormal();
+	FVector ForwardIntention = MoveVelocity.GetSafeNormal();
+	UE_LOG(LogTemp, Warning, TEXT("%s: CurrentTankForward: %s"), *TankName, *CurrentTankForward.ToString());
+	UE_LOG(LogTemp, Warning, TEXT("%s: Forward intention: %s"), *TankName, *ForwardIntention.ToString());
+	IntendMoveForward(FVector::DotProduct(ForwardIntention, CurrentTankForward));
 }
