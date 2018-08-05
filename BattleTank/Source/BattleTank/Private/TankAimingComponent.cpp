@@ -16,6 +16,12 @@ UTankAimingComponent::UTankAimingComponent()
 	// ...
 }
 
+void UTankAimingComponent::Initialize(UTankBarrel* _Barrel, UTankTurret* _Turret)
+{
+	Barrel = _Barrel;
+	Turret = _Turret;
+}
+
 
 // Called when the game starts
 void UTankAimingComponent::BeginPlay()
@@ -23,17 +29,6 @@ void UTankAimingComponent::BeginPlay()
 	Super::BeginPlay();
 
 	// ...
-	
-}
-
-void UTankAimingComponent::SetBarrelReference(UTankBarrel * BarrelToSet)
-{
-	Barrel = BarrelToSet;
-}
-
-void UTankAimingComponent::SetTurretReference(UTankTurret * _Turret)
-{
-	Turret = _Turret;
 }
 
 
