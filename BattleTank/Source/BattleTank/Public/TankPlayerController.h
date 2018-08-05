@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Fill out your copyright notice in theDescription page of Project Settings.
 
 #pragma once
 
@@ -22,6 +22,10 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+protected:
+	UFUNCTION(BlueprintCallable, Category = "Setup")
+	ATank* GetControlledTank() const;
+
 private:
 	UPROPERTY(EditDefaultsOnly)
 	float CrosshairXLocation = 0.5;
@@ -30,8 +34,6 @@ private:
 	UPROPERTY(EditDefaultsOnly)
 	float LineTraceRange = 1000000; // CM -> 10 KM
 	
-	ATank* GetControlledTank() const;
-
 	// Start tank moving the barrel so that a shot would hit where the crosshair intersects the world
 	void AimTowardsCrosshair();
 
