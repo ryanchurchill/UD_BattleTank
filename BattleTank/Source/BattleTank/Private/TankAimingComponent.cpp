@@ -27,8 +27,6 @@ void UTankAimingComponent::Initialize(UTankBarrel* _Barrel, UTankTurret* _Turret
 void UTankAimingComponent::BeginPlay()
 {
 	Super::BeginPlay();
-
-	// ...
 }
 
 
