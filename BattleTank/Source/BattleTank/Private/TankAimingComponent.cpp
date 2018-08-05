@@ -33,7 +33,7 @@ void UTankAimingComponent::BeginPlay()
 void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 {
 	FString ThisTankName = GetOwner()->GetName();
-	if (Barrel == nullptr) {
+	if (!ensure(Barrel)) {
 		UE_LOG(LogTemp, Error, TEXT("%s failed to find Barrel"), *ThisTankName);
 		return;
 	}

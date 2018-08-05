@@ -11,12 +11,12 @@ void ATankAiController::BeginPlay()
 
 	// try to get the tank
 	ATank* ControlledTank = GetControlledTank();
-	if (ControlledTank == nullptr) {
+	if (!ensure(ControlledTank)) {
 		UE_LOG(LogTemp, Error, TEXT("AiController Failed to find tank"));
 	}
 
 	ATank* PlayerTank = GetPlayerTank();
-	if (PlayerTank == nullptr) {
+	if (!ensure(PlayerTank)) {
 		UE_LOG(LogTemp, Error, TEXT("AiController Failed to find PlayerTank"));
 	}
 }
@@ -48,7 +48,7 @@ ATank* ATankAiController::GetControlledTank() const
 ATank * ATankAiController::GetPlayerTank() const
 {
 	APawn* PlayerPawn = GetWorld()->GetFirstPlayerController()->GetPawn();
-	if (PlayerPawn == nullptr) {
+	if (!ensure(PlayerPawn)) {
 		UE_LOG(LogTemp, Error, TEXT("Failed to find Player Tank"));
 		return nullptr;
 	}

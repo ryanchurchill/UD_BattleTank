@@ -5,10 +5,7 @@
 
 void UTankMovementComponent::Initialize(UTankTrack* _LeftTrack, UTankTrack* _RightTrack)
 {
-	if (!_LeftTrack || !_RightTrack) {
-		UE_LOG(LogTemp, Error, TEXT("Could not initialize TankMovementComponent; Missing a track"));
-		return;
-	}
+	if (!ensure(_LeftTrack && !_RightTrack)) { return; }
 	LeftTrack = _LeftTrack;
 	RightTrack = _RightTrack;
 }
@@ -18,10 +15,7 @@ void UTankMovementComponent::IntendMoveForward(float Throw)
 	//FString TankName = GetOwner()->GetName();
 	//UE_LOG(LogTemp, Warning, TEXT("%s: Intend throw: %f"), *TankName, Throw);
 
-	if (!LeftTrack || !RightTrack) {
-		UE_LOG(LogTemp, Error, TEXT("Could not move: tracks not initialized"));
-		return;
-	}
+	if (!ensure(LeftTrack && RightTrack)) { return; }
 
 	LeftTrack->SetThrottle(Throw);
 	RightTrack->SetThrottle(Throw);
@@ -32,10 +26,7 @@ void UTankMovementComponent::IntendTurnRight(float Throw)
 	//FString TankName = GetOwner()->GetName();
 	//UE_LOG(LogTemp, Warning, TEXT("%s: Intend turn throw: %f"), *TankName, Throw);
 
-	if (!LeftTrack || !RightTrack) {
-		UE_LOG(LogTemp, Error, TEXT("Could not move: tracks not initialized"));
-		return;
-	}
+	if (!ensure(LeftTrack && RightTrack)) { return; }
 
 	LeftTrack->SetThrottle(Throw);
 	RightTrack->SetThrottle(-Throw);
