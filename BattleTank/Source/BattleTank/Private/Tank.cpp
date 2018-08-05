@@ -16,6 +16,11 @@ ATank::ATank()
 
 void ATank::AimAt(FVector HitLocation)
 {
+	if (TankAimingComponent == nullptr) {
+		FString ThisTankName = GetName();
+		UE_LOG(LogTemp, Error, TEXT("%s is missing TankAimingComponent"), *ThisTankName);
+		return;
+	}
 	TankAimingComponent->AimAt(HitLocation, LaunchSpeed);	
 }
 
