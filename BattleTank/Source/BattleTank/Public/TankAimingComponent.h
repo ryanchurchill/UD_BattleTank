@@ -31,13 +31,16 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Setup")
 	void Initialize(UTankBarrel* _Barrel, UTankTurret* _Turret);
 
-	void AimAt(FVector, float LaunchSpeed);
+	void AimAt(FVector);
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
 	UPROPERTY(BlueprintReadOnly, Category = "State")
 	EFiringState FiringStatus = EFiringState::Aiming;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
+	float LaunchSpeed = 4000; // CM -> 1,000 m/s
 
 private:
 	UTankBarrel* Barrel = nullptr;

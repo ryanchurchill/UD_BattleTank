@@ -13,11 +13,11 @@ void UTankMovementComponent::Initialize(UTankTrack* _LeftTrack, UTankTrack* _Rig
 void UTankMovementComponent::IntendMoveForward(float Throw)
 {
 	FString TankName = GetOwner()->GetName();
-	UE_LOG(LogTemp, Warning, TEXT("%s: Intend throw: %f"), *TankName, Throw);
+	//UE_LOG(LogTemp, Warning, TEXT("%s: Intend throw: %f"), *TankName, Throw);
 
 	if (!ensure(LeftTrack && RightTrack)) { return; }
 
-	UE_LOG(LogTemp, Warning, TEXT("2 %s: Intend throw: %f"), *TankName, Throw);
+	//UE_LOG(LogTemp, Warning, TEXT("2 %s: Intend throw: %f"), *TankName, Throw);
 
 	LeftTrack->SetThrottle(Throw);
 	RightTrack->SetThrottle(Throw);

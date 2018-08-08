@@ -29,10 +29,7 @@ void AProjectile::Tick(float DeltaTime)
 
 void AProjectile::LaunchProjectile(float Speed)
 {
-	if (ProjectileMovement == nullptr) {
-		UE_LOG(LogTemp, Error, TEXT("Cannot launch. ProjectileMovement not set"));
-		return;
-	}
+	if (ProjectileMovement == nullptr) { return; }
 
 	ProjectileMovement->SetVelocityInLocalSpace(FVector::ForwardVector * Speed);
 	ProjectileMovement->Activate();

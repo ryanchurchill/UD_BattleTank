@@ -30,13 +30,10 @@ void UTankAimingComponent::BeginPlay()
 }
 
 
-void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
+void UTankAimingComponent::AimAt(FVector HitLocation)
 {
 	FString ThisTankName = GetOwner()->GetName();
-	if (!ensure(Barrel)) {
-		UE_LOG(LogTemp, Error, TEXT("%s failed to find Barrel"), *ThisTankName);
-		return;
-	}
+	if (!ensure(Barrel)) { return; }
 	
 	FVector OutLaunchVelocity;
 	FVector StartLocation = Barrel->GetSocketLocation(FName("Projectile"));
