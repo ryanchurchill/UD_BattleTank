@@ -33,6 +33,22 @@ void UTankAimingComponent::BeginPlay()
 	LastFireTime = FPlatformTime::Seconds();
 }
 
+void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction * ThisTickFunction)
+{
+	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+
+	// set firing status
+	if (IsReloading()) {
+		FiringStatus = EFiringState::Reloading;
+	}
+	else if (IsBarrelMoving()) {
+		FiringStatus = EFiringState::Aiming;
+	}
+	else {
+		FiringStatus = EFiringState::Locked;
+	}
+}
+
 
 void UTankAimingComponent::AimAt(FVector HitLocation)
 {
@@ -81,20 +97,6 @@ void UTankAimingComponent::RotateTurretTowards(FVector AimDirection)
 	FRotator AimAsRotator = AimDirection.Rotation();
 	FRotator DeltaRotator = AimAsRotator - TurretRotation;
 	Turret->Rotate(DeltaRotator.Yaw);
-}
-
-void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction * ThisTickFunction)
-{
-	// set firing status
-	if (IsReloading()) {
-		FiringStatus = EFiringState::Reloading;
-	}
-	else if (IsBarrelMoving()) {
-		FiringStatus = EFiringState::Aiming;
-	}
-	else {
-		FiringStatus = EFiringState::Locked;
-	}
 }
 
 void UTankAimingComponent::Fire()
