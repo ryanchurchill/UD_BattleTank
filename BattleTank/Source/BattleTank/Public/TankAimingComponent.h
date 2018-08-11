@@ -63,4 +63,8 @@ private:
 	void RotateTurretTowards(FVector AimDirection);
 	
 	void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) override;
+
+	bool IsReloading();
+	bool IsBarrelMoving();
+	FVector LastAimDirection = FVector(0.0, 0.0, 0.0); // TODO: glitchy?
 };
