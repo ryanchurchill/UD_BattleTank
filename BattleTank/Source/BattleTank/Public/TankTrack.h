@@ -36,4 +36,6 @@ private:
 	void FixSlippage(float DeltaTime);
 	void FixFlying(float DeltaTime);
 	
+	UFUNCTION()
+	void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit);
 };
