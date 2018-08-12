@@ -29,12 +29,12 @@ protected:
 
 private:
 	UStaticMeshComponent* Tank;
+	float CurrentThrottle;
 	
 	UTankTrack();
-	void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) override;
 	
-	void FixSlippage(float DeltaTime);
-	void FixFlying(float DeltaTime);
+	void FixSlippage();
+	void DriveTrack();
 	
 	UFUNCTION()
 	void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit);
