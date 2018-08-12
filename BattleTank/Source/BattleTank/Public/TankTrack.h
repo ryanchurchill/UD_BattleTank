@@ -23,8 +23,17 @@ public:
 	UPROPERTY(EditDefaultsOnly)
 	float TrackMaxDrivingForce = 40000000;
 
-private:
-	UTankTrack();
+protected:
+	// Called when the game starts
+	virtual void BeginPlay() override;
 
+private:
+	UStaticMeshComponent* Tank;
+	
+	UTankTrack();
 	void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) override;
+	
+	void FixSlippage(float DeltaTime);
+	void FixFlying(float DeltaTime);
+	
 };
