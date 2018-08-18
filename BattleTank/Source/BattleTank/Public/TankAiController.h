@@ -26,7 +26,7 @@ private:
 	APawn* GetPlayerTank() const;
 
 	// How close should AI tank get to player 
-	float AcceptanceRadius = 100; // TODO
+	float AcceptanceRadius = 100000; // TODO
 
 	UTankAimingComponent* AimingComponent = nullptr;
 };

@@ -37,6 +37,8 @@ public:
 
 	void AimAt(FVector);
 
+	EFiringState GetFiringState() const;
+
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;

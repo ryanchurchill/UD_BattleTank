@@ -49,6 +49,11 @@ void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 	}
 }
 
+EFiringState UTankAimingComponent::GetFiringState() const
+{
+	return FiringStatus;
+}
+
 
 void UTankAimingComponent::AimAt(FVector HitLocation)
 {
@@ -131,5 +136,5 @@ bool UTankAimingComponent::IsBarrelMoving()
 	if (!ensure(Barrel)) { return false; }
 
 	FVector CurrentBarrelVector = Barrel->GetForwardVector();
-	return !CurrentBarrelVector.Equals(LastAimDirection, 0.01);
+	return !CurrentBarrelVector.Equals(LastAimDirection, 0.05);
 }
