@@ -19,14 +19,16 @@ class BATTLETANK_API ATankAiController : public AAIController
 public:
 	void BeginPlay() override;	
 	
-	
+protected:
+	// How close should AI tank get to player
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+	float AcceptanceRadius = 8000;
+
+
 private:
 	virtual void Tick(float DeltaTime) override;
 	APawn* GetControlledTank() const;
 	APawn* GetPlayerTank() const;
-
-	// How close should AI tank get to player 
-	float AcceptanceRadius = 100000; // TODO
 
 	UTankAimingComponent* AimingComponent = nullptr;
 };
