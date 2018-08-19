@@ -38,20 +38,28 @@ void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
 	// set firing status
-	if (IsReloading()) {
-		FiringStatus = EFiringState::Reloading;
+	if (RoundsLeft <= 0) {
+		FiringState = EFiringState::OutOfAmmo; // TODO: efficient to keep ticking once we're out of ammo?
+	}
+	else if (IsReloading()) {
+		FiringState = EFiringState::Reloading;
 	}
 	else if (IsBarrelMoving()) {
-		FiringStatus = EFiringState::Aiming;
+		FiringState = EFiringState::Aiming;
 	}
 	else {
-		FiringStatus = EFiringState::Locked;
+		FiringState = EFiringState::Locked;
 	}
+}
+
+int UTankAimingComponent::GetRoundsLeft() const
+{
+	return RoundsLeft;
 }
 
 EFiringState UTankAimingComponent::GetFiringState() const
 {
-	return FiringStatus;
+	return FiringState;
 }
 
 
@@ -113,7 +121,9 @@ void UTankAimingComponent::Fire()
 {
 	if (!ensure(Barrel && ProjectileBlueprint)) { return; }
 
-	if (FiringStatus != EFiringState::Reloading) {
+	// TODO: refactor into canFire method
+	if (FiringState != EFiringState::Reloading
+		&& FiringState != EFiringState::OutOfAmmo) {
 		// Spawn a projectile at the socket location of the barrel
 		AProjectile* Projectile = GetWorld()->SpawnActor<AProjectile>(
 			ProjectileBlueprint,
@@ -123,6 +133,7 @@ void UTankAimingComponent::Fire()
 
 		Projectile->LaunchProjectile(LaunchSpeed);
 		LastFireTime = FPlatformTime::Seconds();
+		RoundsLeft--;
 	}
 }
 
