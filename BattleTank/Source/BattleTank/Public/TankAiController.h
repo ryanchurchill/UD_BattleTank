@@ -18,17 +18,24 @@ class BATTLETANK_API ATankAiController : public AAIController
 	
 public:
 	void BeginPlay() override;	
-	
+
 protected:
 	// How close should AI tank get to player
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	float AcceptanceRadius = 8000;
 
-
 private:
 	virtual void Tick(float DeltaTime) override;
+
+	// called when pawn is posessed
+	virtual void SetPawn(APawn* InPawn) override;
+
 	APawn* GetControlledTank() const;
 	APawn* GetPlayerTank() const;
 
 	UTankAimingComponent* AimingComponent = nullptr;
+
+	UFUNCTION()
+	void OnPosessedTankDeath();
+
 };
