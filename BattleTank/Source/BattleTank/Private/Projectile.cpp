@@ -1,10 +1,12 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Projectile.h"
+#include "GameFramework/Actor.h"
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "Components/StaticMeshComponent.h"
 #include "Particles/ParticleSystemComponent.h"
 #include "PhysicsEngine/RadialForceComponent.h"
+#include "Engine/World.h"
 
 // Sets default values
 AProjectile::AProjectile()
@@ -59,8 +61,23 @@ void AProjectile::LaunchProjectile(float Speed)
 
 void AProjectile::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit)
 {
-	UE_LOG(LogTemp, Warning, TEXT("Hit!"));
 	LaunchBlast->Deactivate();
 	ImpactBlast->Activate();
+	
+	// physics
 	ExplosionForce->FireImpulse();
+
+	// destroy collision mesh
+	SetRootComponent(ImpactBlast); // So we don't destroy the impact blast?
+	CollisionMesh->DestroyComponent();
+
+	// destroy with timer
+	FTimerHandle Timer;
+	GetWorld()->GetTimerManager().SetTimer(Timer, this, &AProjectile::DestroyProjectile, DestroyDelay, false);
+}
+
+void AProjectile::DestroyProjectile()
+{
+	UE_LOG(LogTemp, Warning, TEXT("Timer"));
+	Destroy();
 }
