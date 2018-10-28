@@ -35,6 +35,9 @@ private:
 	float LineTraceRange = 1000000; // CM -> 10 KM
 
 	UTankAimingComponent* AimingComponent = nullptr;
+
+	// called when pawn is posessed
+	virtual void SetPawn(APawn* InPawn) override;
 	
 	// Start tank moving the barrel so that a shot would hit where the crosshair intersects the world
 	void AimTowardsCrosshair();
@@ -43,4 +46,7 @@ private:
 	bool GetSightRayHitLocation(FVector& OutHitLocation) const;
 	bool GetLookDirection(FVector2D ScreenLocation, FVector & LookDirection) const;
 	bool GetLookVectorHitLocation(FVector LookDirection, FVector & OutHitLocation) const;
+
+	UFUNCTION()
+	void OnPosessedTankDeath();
 };

@@ -37,9 +37,10 @@ void ATankAiController::SetPawn(APawn* InPawn)
 void ATankAiController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	
+
 	APawn* PlayerTank = GetPlayerTank();
-	if (ensure(PlayerTank)) {
+	if (PlayerTank != nullptr) {
+	//if (ensure(PlayerTank)) {
 		APawn* ControlledTank = GetControlledTank();
 
 		// move towards the player
@@ -64,7 +65,7 @@ APawn* ATankAiController::GetControlledTank() const
 APawn * ATankAiController::GetPlayerTank() const
 {
 	APawn* PlayerPawn = GetWorld()->GetFirstPlayerController()->GetPawn();
-	if (!ensure(PlayerPawn)) {
+	if (!PlayerPawn) {
 		return nullptr;
 	}
 
@@ -73,5 +74,10 @@ APawn * ATankAiController::GetPlayerTank() const
 
 void ATankAiController::OnPosessedTankDeath()
 {
-	UE_LOG(LogTemp, Warning, TEXT("Tank Died!"));
+	//UE_LOG(LogTemp, Warning, TEXT("Tank Died!"));
+	//DetachFromControllerPendingDestroy();
+	APawn* ControlledTank = GetControlledTank();
+	if (ensure(ControlledTank)) {
+		ControlledTank->DetachFromControllerPendingDestroy();
+	}
 }
