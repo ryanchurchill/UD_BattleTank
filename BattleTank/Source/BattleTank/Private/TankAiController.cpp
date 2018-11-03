@@ -26,6 +26,7 @@ void ATankAiController::SetPawn(APawn* InPawn)
 	Super::SetPawn(InPawn);
 	if (InPawn)
 	{
+		// TODO: crashes on mortar
 		ATank* PosessedTank = Cast<ATank>(InPawn);
 		if (!ensure(PosessedTank)) { return; }
 
