@@ -122,6 +122,7 @@ void UTankAimingComponent::RotateTurretTowards(FVector AimDirection)
 
 void UTankAimingComponent::Fire()
 {
+	if (!bCanFire) { return; }
 	if (!ensure(Barrel && ProjectileBlueprint)) { return; }
 
 	// TODO: refactor into canFire method

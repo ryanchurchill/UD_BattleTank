@@ -53,6 +53,9 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 	float LaunchSpeed = 4000; // CM -> 1,000 m/s
 
+	UPROPERTY(EditAnywhere, Category = "Setup")
+	bool bCanFire = true;
+
 private:
 	UTankBarrel* Barrel = nullptr;
 	UTankTurret* Turret = nullptr;
