@@ -19,7 +19,6 @@ void UTankTrack::BeginPlay()
 void UTankTrack::SetThrottle(float Throttle)
 {
 	float CurrentThrottle = FMath::Clamp<float>(Throttle, -1, 1);
-	UE_LOG(LogTemp, Warning, TEXT("set throttle"));
 	DriveTrack(CurrentThrottle);
 }
 
