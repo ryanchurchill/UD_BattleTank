@@ -10,7 +10,7 @@
 ASprungWheel::ASprungWheel()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
+	PrimaryActorTick.bCanEverTick = false;
 
 	SpringConstraint = CreateDefaultSubobject<UPhysicsConstraintComponent>(FName("SpringConstraint"));
 	SetRootComponent(SpringConstraint);
@@ -37,6 +37,12 @@ void ASprungWheel::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+}
+
+void ASprungWheel::AddDrivingForce(float ForceMagnitude)
+{
+	// TODO: should only apply force when wheel is on the ground
+	Wheel->AddForce(Axle->GetForwardVector() * ForceMagnitude);
 }
 
 void ASprungWheel::SetupConstraints()
